@@ -25,8 +25,10 @@ log_file="/var/log/daily-backup.log" # Arquivo de log
 # --- TESTES
 
 if ! mountpoint -q -- $external_storage; then # Pendrive plugado na máquina?
+	[[ "$?" = '0' ]] && echo "[INFO] - DEVICE NOT MOUNTED, CHECK LOG in /var/log/daily-backup.log"
 	printf "[$date_log] DEVICE NOT MOUNTED in: $external_storage CHECK IT.\n" >> $log_file
 	exit 1
+	
 else 
 	[[ ! -d "$destination" ]] && mkdir -p "$destination"
 fi
