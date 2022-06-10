@@ -1,0 +1,9 @@
+# Local onde gnome coloca o google drive
+
+gdrive=$(ls -ld /run/user/$UID/gvfs/google-drive:host=gmail.com,user=jesherdevsk8 | awk {'print $8'})
+
+echo $gdrive | cut -d = -f 3
+
+# Econtrar diretório do google drive - alternativa mais lenta
+
+find /run/user/$UID/gvfs -type d | grep -P "jesherdevsk8$"
