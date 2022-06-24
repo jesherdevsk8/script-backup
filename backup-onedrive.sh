@@ -13,15 +13,13 @@
 # -----------------------------------------------------------------
 
 #-------------------------- VARIAVEIS -----------------------------
-
-backup_path="/home/jesher/claretiano/tickets" # Diretório para backup
-backup_path2="/home/jesher/Documentos"
+ # Diretórios para fazer backups
+backup_path="/home/jesher/claretiano/tickets /home/jesher/Documentos/"
 external_storage="/home/jesher/onedrive" # Local de destino backup
 destination="/home/jesher/onedrive/backups" # Criar diretório
 date_log="$(date)"
 date_format=$(date "+%A %d-%m-%Y")
 final_archive="backup-$date_format.tar.gz" # Formato do arquivo
-final_archive2="claretiano_documentos-$date_format.tar.xz"
 log_file="$HOME/Documentos/script-backup/backup-onedrive.log" # Arquivo de log
 
 #--------------------------- TESTES -------------------------------
@@ -39,17 +37,10 @@ fi
 
 #---------------------------- MAIN --------------------------------
 
-if tar -cpSzf "$destination/$final_archive" "$backup_path" &>/dev/null; then
+if tar -cpSzf "$destination/$final_archive" $backup_path &>/dev/null; then
   printf "[$date_log] BACKUP BEM SUCEDIDO.\n" >> $log_file
 else
   printf "[$date_log] OUVE UM ERRO AO FAZER BACKUP...!!\n" >> $log_file
 fi
 
-# Execução do backup_path2
-if tar -cpSzf "$destination/$final_archive2" "$backup_path2" &>/dev/null; then
-  printf "[$date_log] BACKUP BEM SUCEDIDO - DIRETÓRIO DOCUMENTOS.\n" >> $log_file
-else
-  printf "[$date_log] BACKUP COM ERRO - DIRETÓRIO DOCUMENTOS.\n" >> $log_file
-fi
-
-find ${destination}/*.gz -mtime +3 -delete # Excluir arquivos tar.xz com mais de cinco dias
+find ${destination}/*.gz -mtime +3 -delete # Excluir arquivos tar.gz com mais de três dias

@@ -9,19 +9,17 @@
 # -----------------------------------------------------------------
 # Uso: ln -s /script-backup/backup-gdrive.sh /usr/local/bin/backup-gdrive
 # backup-gdrive or
-# Cron: 20 12 * * 2,4 backup-onedrive 1> /dev/null 2>&1
+# Cron: 20 12 * * 2,4 backup-gdrive 1> /dev/null 2>&1
 # -----------------------------------------------------------------
 
 #-------------------------- VARIAVEIS -----------------------------
-
-backup_path="/home/jesher/claretiano/tickets" # Diretório para backup
-backup_path2="/home/jesher/Documentos"
-external_storage="/run/user/1000/gvfs/google-drive:host=gmail.com,user=jesherdevsk8" # Destino do backup
+# Diretórios para fazer backups
+backup_path="/home/jesher/claretiano/tickets /home/jesher/Documentos/"
+external_storage="//run/user/1000/gvfs/google-drive:host=gmail.com,user=jesherdevsk8" # Destino do backup
 destination_dir="/run/user/1000/gvfs/google-drive:host=gmail.com,user=jesherdevsk8/backup-lenovo" # Criar diretório
 date_log="$(date)"
 date_format=$(date "+%A %d-%m-%Y")
 final_archive="backup-$date_format.tar.gz" # Formato do arquivo
-final_archive2="claretiano_documentos-$date_format.tar.gz"
 log_file="$HOME/Documentos/script-backup/backup-gdrive.log" # Arquivo de log
 
 #--------------------------- TESTES -------------------------------
@@ -39,17 +37,10 @@ fi
 
 #---------------------------- MAIN --------------------------------
 
-if tar -cpSzf "$destination_dir/$final_archive" "$backup_path" &>/dev/null; then
+if tar -cpSzf "$destination_dir/$final_archive" $backup_path &>/dev/null; then
         printf "[$date_log] BACKUP BEM SUCEDIDO.\n" >> $log_file
 else
         printf "[$date_log] OUVE UM ERRO AO FAZER BACKUP...!!\n" >> $log_file
 fi
 
-# Execução do backup_path2
-if tar -cpSzf "$destination_dir/$final_archive2" "$backup_path2" &>/dev/null; then
-  printf "[$date_log] BACKUP BEM SUCEDIDO - DIRETÓRIO DOCUMENTOS.\n" >> $log_file
-else
-  printf "[$date_log] BACKUP COM ERRO - DIRETÓRIO DOCUMENTOS.\n" >> $log_file
-fi
-
-find ${destination_dir}/* -mtime +5 -delete # Excluir arquivos backup com mais de cinco dias
+find ${destination_dir}/* -mtime +3 -delete # Excluir arquivos backup com mais de três dias
