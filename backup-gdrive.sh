@@ -15,7 +15,7 @@
 #-------------------------- VARIAVEIS -----------------------------
 # Diretórios para fazer backups
 backup_path="/home/jesher/claretiano/tickets /home/jesher/Documentos/"
-external_storage="//run/user/1000/gvfs/google-drive:host=gmail.com,user=jesherdevsk8" # Destino do backup
+external_storage="/run/user/1000/gvfs/google-drive:host=gmail.com,user=jesherdevsk8" # Destino do backup
 destination_dir="/run/user/1000/gvfs/google-drive:host=gmail.com,user=jesherdevsk8/backup-lenovo" # Criar diretório
 date_log="$(date)"
 date_format=$(date "+%A %d-%m-%Y")
